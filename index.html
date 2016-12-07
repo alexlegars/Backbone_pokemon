@@ -32,7 +32,7 @@
             );
 
             //Données mocks object correspondant à la liste des pokemons
-            var pokemon;
+            var pokemons;
 
             /**
              * Document ready event
@@ -64,12 +64,12 @@
 
                     pokemons.each
                     (
-                            function( contact )
+                            function( pokemon )
                             {
                                 $pokemon_list.append
                                 (
                                         "<li><a href='pokemon.php?id="+ pokemon.get( "id" ) +"'>"+
-                                        pokemons.get( "nom" ) +
+                                        pokemon.get( "nom" ) +
                                         "</a>" +
                                         "</li>"
                                 );
