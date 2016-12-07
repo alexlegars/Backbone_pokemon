@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Pokémon</title>
+    <meta charset="utf-8" />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+    <script>
+        (function ($)
+        {
+            //Données mocks object correspondant à la liste des pokemons
+            var pokemons;
+
+            /**
+             * Document ready event
+             * alias de $(document).ready( function(){} );
+             */
+            $( function ()
+            {
+                /**
+                 *  Réception des données du serveur
+                 *
+                 */
+                var main = function()
+                {
+                    // Liste de pokemons json
+                    pokemons =
+                            [
+                                { id:1, nom:"Dracaufeu" },
+                                { id:2, nom:"Bullbizarre" },
+                                { id:3, nom:"Mewtwo" },
+                                { id:4, nom:"Tokipri" },
+                                { id:5, nom:"Roucoups" }
+                            ];
+
+                    // Annule le message de chargement
+                    $( "#loading").remove();
+
+                    // Renseigne les éléments de la liste
+                    var $pokemon_list = $( "#pokemon_list")
+                            ,pokemon;
+                    for( var i= 0, l = pokemons.length; i<l; i++ )
+                    {
+                        pokemon = pokemons[i];
+                        $pokemon_list.append
+                        (
+                                "<li><a href='pokemon.php?id="+ pokemon.id +"'>"+
+                                pokemon.prenom + " "+ pokemon.nom +
+                                "</a>" +
+                                "</li>"
+                        );
+                    }
+
+                };
+
+
+                $( "body" ).append( "<h1 id='loading'>Merci de patienter pendant le chargement des données</h1>" );
+                // Active une pseudo requête async HTTP
+                setTimeout( main, 3000 );
+            });
+        })(jQuery);
+
+    </script>
+</head>
+<body>
+<ul id="pokemon_list">
+</ul>
+</body>
+</html>
