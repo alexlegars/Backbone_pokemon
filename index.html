@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Pokémon</title>
+    <meta charset="utf-8" />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/lodash.js/2.4.1/lodash.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/backbone.js/1.1.0/backbone-min.js"></script>
+
+    <script>
+        (function ($, Backbone)
+        {
+            // Données et models
+            /* Contact { id:1, nom:"Dracaufeu" }  */
+            var PokemonsModel = Backbone.Model.extend(
+                    {
+                        defaults :
+                        {
+                            nom: ""
+                        }
+                    }
+            );
+            /* PokemonsCollection [ new Pokemons(), new Pokemons() ]  */
+            var PokemonsCollection = Backbone.Collection.extend
+            (
+                    {
+                        model : PokemonsModel
+                    }
+            );
+            //Données mocks object correspondant à la liste des pokemons
+            var pokemons;
+            /**
+             * Document ready event
+             * alias de $(document).ready( function(){} );
+             */
+            $( function ()
+            {
+                /**
+                 *  Réception des données du serveur
+                 *
+                 */
+                var main = function()
+                {
+                    // Liste de pokemons json
+                    pokemons = new PokemonsCollection;
+                    pokemons.add( new PokemonsModel({ id:1, nom:"Dracaufeu" }));
+                    pokemons.add( new PokemonsModel({ id:2, nom:"Bullbizarre" }));
+                    pokemons.add( new PokemonsModel({ id:3, nom:"Mewtwo" }));
+                    pokemons.add( new PokemonsModel({ id:4, nom:"Tokipri" }));
+                    pokemons.add( new PokemonsModel({ id:5, nom:"Roucoups" }));
+                    // Annule le message de chargement
+                    $( "#loading").remove();
+                    // Renseigne les éléments de la liste
+                    var $pokemon_list = $( "#pokemon_list");
+                    pokemons.each
+                    (
+                            function( pokemon )
+                            {
+                                $pokemon_list.append
+                                (
+                                        "<li><a href='pokemon.php?id="+ pokemon.get( "id" ) +"'>"+
+                                        pokemon.get( "nom" ) +
+                                        "</a>" +
+                                        "</li>"
+                                );
+                            }
+                    );
+                };
+                $( "body" ).append( "<h1 id='loading'>Merci de patienter pendant le chargement des données</h1>" );
+                // Active une pseudo requête async HTTP
+                setTimeout( main, 3000 );
+            });
+        })(jQuery, Backbone);
+    </script>
+</head>
+<body>
+<ul id="pokemon_list">
+</ul>
+</body>
+</html>
